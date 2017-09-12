@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style/w3.css">
+    <link rel="stylesheet" href="style/lato.css">
+    <link rel="stylesheet" href="style/font-awesome.min.css">
+    <style>
+        body {
+            font-family: "Lato", sans-serif
+        }
+    </style>
+    <script>
+        function requestDownload(url) {
+            xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/download", true);
+            xhr.setRequestHeader("Content-type", "application/text");
+            xhr.send(url);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Done")
+                }
+            };
+        }
+
+        function sendDownload() {
+            let url = document.getElementById("downloadInputBox").value;
+            console.log(url);
+            requestDownload(url)
+        }
+    </script>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card-2">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
+           href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">DOWNLOAD</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">SETTINGS</a>
+    </div>
+</div>
+
+<!-- Download Section -->
+<div id="w3-content">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+        <form class="w3-container">
+            <label class="w3-text-blue"><b>Download URL to send to server</b></label>
+            <input class="w3-input w3-hover-gray" type="text" id="downloadInputBox">
+            <button class="w3-btn w3-blue" onclick="sendDownload()">Download</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
