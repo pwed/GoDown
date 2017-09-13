@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"github.com/gorilla/mux"
 	"os"
-	"io"
 	"io/ioutil"
 	"github.com/cavaliercoder/grab"
 	"fmt"
