@@ -15,9 +15,14 @@ func main() {
 
 	//RestoreAssets("./", "")
 
+	fmt.Println("Starting Server")
+
 	m := mux.NewRouter()
 
 	m.HandleFunc("/download", func(w http.ResponseWriter, r *http.Request) {
+
+		fmt.Println("Request Recieved")
+
 		body, _ := ioutil.ReadAll(r.Body)
 
 		downloadURL := string(body)
@@ -26,7 +31,7 @@ func main() {
 
 		if err == nil {
 
-			filePath := "C:\\Data\\"
+			filePath := "./"
 
 			client := grab.NewClient()
 			req, _ := grab.NewRequest(filePath, downloadURL)
@@ -65,6 +70,8 @@ func main() {
 	})
 
 	m.PathPrefix("/").Handler(http.FileServer(assetFS()))
+
+  fmt.Println("Server running on port 8080")
 
 	http.ListenAndServe(":8080", m)
 }
