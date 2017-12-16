@@ -1,5 +1,8 @@
-/bin/bash
 
-go-bindata-assetfs static/...
+
+go-bindata-assetfs Angular/GoDown/dist/...
+
+
+
 
 go build

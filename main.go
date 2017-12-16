@@ -22,7 +22,7 @@ func main() {
 	m.HandleFunc("/download", downloadHandler)
 
 	if viper.GetBool("LocalStaticFiles") {
-		m.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
+		m.PathPrefix("/").Handler(http.FileServer(http.Dir("Angular/GoDown/dist")))
 	} else {
 		m.PathPrefix("/").Handler(http.FileServer(assetFS()))
 	}
