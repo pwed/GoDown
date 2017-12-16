@@ -1,34 +1,40 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gorilla/mux"
-	"os"
-	"io/ioutil"
-	"github.com/cavaliercoder/grab"
 	"fmt"
-	"time"
+	"io/ioutil"
+	"net/http"
 	"net/url"
-	"encoding/hex"
-	"crypto/sha256"
+	"os"
+	"time"
 
+	"github.com/cavaliercoder/grab"
+	"github.com/gorilla/mux"
+	flag "github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
 func init() {
-	viper.SetConfigName("config") // name of config file (without extension)
-	viper.AddConfigPath("/etc/appname/")   // path to look for the config file in
-	viper.AddConfigPath("$HOME/.appname")  // call multiple times to add many search paths
-	viper.AddConfigPath(".")               // optionally look for config in the working directory
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil { // Handle errors reading the config file
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	flag.Bool("RestoreAssets", false, "Do you want to unpack static files to modify")
+	flag.Parse()
+	viper.BindPFlags(flag.CommandLine)
+	viper.RegisterAlias("RestoreAssets", "Unpack")
+	viper.SetConfigName("config")        // name of config file (without extension)
+	viper.AddConfigPath("/etc/godown/")  // path to look for the config file in
+	viper.AddConfigPath("$HOME/.godown") // call multiple times to add many search paths
+	viper.AddConfigPath(".")             // optionally look for config in the working directory
+	err := viper.ReadInConfig()          // Find and read the config file
+	if err != nil {                      // Handle errors reading the config file
+		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
 }
 
 func main() {
 
-	//RestoreAssets("./", "static")
+	if viper.GetBool("RestoreAssets") {
+		RestoreAssets("./", "static")
+		fmt.Println("Static folder unpacked")
+	}
 
 	fmt.Println("Starting Server")
 
@@ -36,9 +42,11 @@ func main() {
 
 	m.HandleFunc("/download", downloadHandler)
 
-	m.PathPrefix("/").Handler(http.FileServer(assetFS()))
-
-	//m.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
+	if viper.GetBool("LocalStaticFiles") {
+		m.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
+	} else {
+		m.PathPrefix("/").Handler(http.FileServer(assetFS()))
+	}
 
 	fmt.Println("Server running on port 8080")
 
@@ -62,13 +70,12 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 		client := grab.NewClient()
 		req, _ := grab.NewRequest(filePath, downloadURL)
 
-		sum, err := hex.DecodeString("12767bda45b430d66e538a8780587260427935f7513479371dc2a884723ae410")
-		if err != nil {
-			panic(err)
-		}
-
-
-		req.SetChecksum(sha256.New(), sum, true)
+		// sum, err := hex.DecodeString("12767bda45b430d66e538a8780587260427935f7513479371dc2a884723ae410")
+		// if err != nil {
+		// 	panic(err)
+		// }
+		//
+		// req.SetChecksum(sha256.New(), sum, true)
 
 		fmt.Printf("Downloading %v...\n", req.URL())
 		resp := client.Do(req)

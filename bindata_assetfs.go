@@ -89,7 +89,7 @@ func staticIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/index.html", size: 1979, mode: os.FileMode(436), modTime: time.Unix(1505305292, 0)}
+	info := bindataFileInfo{name: "static/index.html", size: 1979, mode: os.FileMode(420), modTime: time.Unix(1512791939, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -109,7 +109,7 @@ func staticScriptJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/script.js", size: 500, mode: os.FileMode(436), modTime: time.Unix(1505807581, 0)}
+	info := bindataFileInfo{name: "static/script.js", size: 500, mode: os.FileMode(436), modTime: time.Unix(1513169435, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -129,7 +129,7 @@ func staticStyleFontAwesomeMinCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/style/font-awesome.min.css", size: 31000, mode: os.FileMode(436), modTime: time.Unix(1505305292, 0)}
+	info := bindataFileInfo{name: "static/style/font-awesome.min.css", size: 31000, mode: os.FileMode(420), modTime: time.Unix(1512791939, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -149,7 +149,7 @@ func staticStyleLatoCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/style/lato.css", size: 175, mode: os.FileMode(436), modTime: time.Unix(1505305292, 0)}
+	info := bindataFileInfo{name: "static/style/lato.css", size: 175, mode: os.FileMode(420), modTime: time.Unix(1512791939, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -169,7 +169,7 @@ func staticStyleLatoTtf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/style/lato.ttf", size: 59812, mode: os.FileMode(436), modTime: time.Unix(1505305292, 0)}
+	info := bindataFileInfo{name: "static/style/lato.ttf", size: 59812, mode: os.FileMode(420), modTime: time.Unix(1512791939, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -189,7 +189,7 @@ func staticStyleW3Css() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "static/style/w3.css", size: 26166, mode: os.FileMode(436), modTime: time.Unix(1505305292, 0)}
+	info := bindataFileInfo{name: "static/style/w3.css", size: 26166, mode: os.FileMode(420), modTime: time.Unix(1512791939, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

@@ -1,3 +1,6 @@
-GoDown
+GoDown*
 .idea
 .idea/*
+.json
+build/*
+build
