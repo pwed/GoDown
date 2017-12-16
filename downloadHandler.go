@@ -20,6 +20,8 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 
 	downloadURL := string(body)
 
+	fmt.Printf("Body %v", downloadURL)
+
 	_, err := url.ParseRequestURI(downloadURL)
 
 	if err == nil {
