@@ -1,5 +1,13 @@
-/bin/bash
+rm bindata_assetfs.go
 
-go-bindata-assetfs static/...
+cd Angular/GoDown/
+
+
+go-bindata-assetfs dist/...
+
+mv bindata_assetfs.go ../..
+
+cd ../..
+
 
 go build

@@ -19,10 +19,10 @@ func main() {
 
 	m := mux.NewRouter()
 
-	m.HandleFunc("/download", downloadHandler)
+	m.HandleFunc("/api/startDownload", downloadHandler)
 
 	if viper.GetBool("LocalStaticFiles") {
-		m.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
+		m.PathPrefix("/").Handler(http.FileServer(http.Dir("Angular/GoDown/dist")))
 	} else {
 		m.PathPrefix("/").Handler(http.FileServer(assetFS()))
 	}
