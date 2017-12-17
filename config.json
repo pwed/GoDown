@@ -1,4 +1,5 @@
 {
   "DownloadFolder": "/home/pwed/Downloads/",
-  "LocalStaticFiles": true
+  "LocalStaticFiles": false,
+  "WatchConfig": true
 }

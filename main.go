@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/fsnotify/fsnotify"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
@@ -13,6 +14,13 @@ func main() {
 	if viper.GetBool("RestoreAssets") {
 		RestoreAssets("./", "static")
 		fmt.Println("Static folder unpacked")
+	}
+
+	if viper.GetBool("WatchConfig") {
+		viper.WatchConfig()
+		viper.OnConfigChange(func(e fsnotify.Event) {
+			fmt.Println("Config file changed:", e.Name)
+		})
 	}
 
 	fmt.Println("Starting Server")
