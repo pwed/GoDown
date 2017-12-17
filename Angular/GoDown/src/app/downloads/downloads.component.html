@@ -1,3 +1,8 @@
-<p>
-  downloads works!
-</p>
+<!-- Download Section -->
+<mat-card>
+  <mat-form-field>
+    <input matInput placeholder="Download URL" value="" [(ngModel)]="downloadURL">
+  </mat-form-field>
+
+  <button mat-raised-button (click)="startDownload()">Start</button>
+</mat-card>

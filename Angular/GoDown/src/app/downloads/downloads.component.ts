@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { MatMenuModule } from '@angular/material/'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-downloads',
@@ -8,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DownloadsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  downloadURL: string;
+
+  readonly ROOT_URL = "/api/"
+
+  response: any;
+
 
   ngOnInit() {
+  }
+
+  startDownload() {
+    console.log(this.downloadURL)
+    this.http.post(this.ROOT_URL + 'startDownload', this.downloadURL).subscribe()
   }
 
 }
