@@ -17,7 +17,6 @@ export class DownloadsComponent implements OnInit {
   hashTypes = [
     {value: 'none', viewValue: 'None'},
     {value: 'md5', viewValue: 'MD5'},
-    {value: 'rsa', viewValue: 'RSA'},
     {value: 'sha1', viewValue: 'SHA1'},
     {value: 'sha256', viewValue: 'SHA256'},
     {value: 'sha512', viewValue: 'SHA512'},

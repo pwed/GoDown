@@ -1,4 +1,15 @@
-go-bindata-assetfs Angular/GoDown/dist/...
+rm bindata_assetfs.go
+
+cd Angular/GoDown/
+
+ng build --prod
+
+
+go-bindata-assetfs dist/...
+
+mv bindata_assetfs.go ../..
+
+cd ../..
 
 env GOOS=android   GOARCH=arm      go build -o build/GoDown-android-arm     -v github.com/Pwed/GoDown
 env GOOS=darwin    GOARCH=386      go build -o build/GoDown-darwin-386      -v github.com/Pwed/GoDown

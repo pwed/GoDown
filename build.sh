@@ -2,7 +2,7 @@ rm bindata_assetfs.go
 
 cd Angular/GoDown/
 
-ng build
+ng build --prod
 
 
 go-bindata-assetfs dist/...

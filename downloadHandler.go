@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -16,6 +15,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// DownloadRequest defines a new download request to be handled
 type DownloadRequest struct {
 	DownloadURL      string `json:"downloadURL"`
 	DownloadChecksum string `json:"downloadChecksum"`
@@ -51,7 +51,7 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 				panic(err)
 			}
 
-			req.SetChecksum(md5.New(), sum, true)
+			setChecksum(req, sum, true, dr.HashType)
 		}
 		fmt.Printf("Downloading %v...\n", req.URL())
 		resp := client.Do(req)
@@ -81,7 +81,6 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 		// check for errors
 		if err := resp.Err(); err != nil {
 			fmt.Fprintf(os.Stderr, "Download failed: %v\n", err)
-			//os.Exit(1)
 		}
 
 	}
