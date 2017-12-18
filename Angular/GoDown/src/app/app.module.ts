@@ -38,7 +38,7 @@ import { DownloadsComponent } from './downloads/downloads.component';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

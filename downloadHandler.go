@@ -1,8 +1,12 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -12,32 +16,43 @@ import (
 	"github.com/spf13/viper"
 )
 
+type DownloadRequest struct {
+	DownloadURL      string `json:"downloadURL"`
+	DownloadChecksum string `json:"downloadChecksum"`
+	HashType         string `json:"hashType"`
+}
+
 func downloadHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Request Recieved")
 
 	body, _ := ioutil.ReadAll(r.Body)
 
-	downloadURL := string(body)
+	fmt.Printf("Body %v", string(body))
 
-	fmt.Printf("Body %v", downloadURL)
+	var dr DownloadRequest
 
-	_, err := url.ParseRequestURI(downloadURL)
+	if err := json.Unmarshal(body, &dr); err != nil {
+		log.Fatal(err)
+	}
+
+	_, err := url.ParseRequestURI(dr.DownloadURL)
 
 	if err == nil {
 
 		filePath := viper.GetString("DownloadFolder")
 
 		client := grab.NewClient()
-		req, _ := grab.NewRequest(filePath, downloadURL)
+		req, _ := grab.NewRequest(filePath, dr.DownloadURL)
 
-		// sum, err := hex.DecodeString("12767bda45b430d66e538a8780587260427935f7513479371dc2a884723ae410")
-		// if err != nil {
-		// 	panic(err)
-		// }
-		//
-		// req.SetChecksum(sha256.New(), sum, true)
+		if dr.DownloadChecksum != "" {
+			sum, err := hex.DecodeString(dr.DownloadChecksum)
+			if err != nil {
+				panic(err)
+			}
 
+			req.SetChecksum(md5.New(), sum, true)
+		}
 		fmt.Printf("Downloading %v...\n", req.URL())
 		resp := client.Do(req)
 		fmt.Printf("  %v\n", resp.HTTPResponse.Status)
@@ -60,6 +75,8 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 				break Loop
 			}
 		}
+		response, _ := json.Marshal(resp)
+		fmt.Printf("response %v", response)
 
 		// check for errors
 		if err := resp.Err(); err != nil {
@@ -67,6 +84,5 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 			//os.Exit(1)
 		}
 
-		fmt.Printf("Download saved to %v \n", resp.Filename)
 	}
 }

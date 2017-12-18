@@ -1,7 +1,17 @@
 <!-- Download Section -->
 <mat-card>
   <mat-form-field>
-    <input matInput placeholder="Download URL penis" value="" [(ngModel)]="downloadURL">
+    <input matInput placeholder="Download URL" value="" [(ngModel)]="downloadURL">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Checksum" value="" [(ngModel)]="downloadChecksum">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Hash Type"  [(ngModel)]="downloadHashType">
+      <mat-option *ngFor="let hashType of hashTypes" [value]="hashType.value">
+        {{ hashType.viewValue }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
   <button mat-raised-button (click)="startDownload()">Start</button>
