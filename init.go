@@ -15,7 +15,7 @@ func init() {
 	pflag.Parse()
 	viper.BindPFlags(pflag.CommandLine)
 	viper.SetDefault("Port", ":8080")
-	viper.SetDefault("DownloadFolder", filepath.FromSlash("downloads/"))
+	viper.SetDefault("DownloadFolder", filepath.FromSlash("Downloads/"))
 	viper.RegisterAlias("RestoreAssets", "Unpack")
 	viper.SetConfigName("config")        // name of config file (without extension)
 	viper.AddConfigPath("/etc/godown/")  // path to look for the config file in

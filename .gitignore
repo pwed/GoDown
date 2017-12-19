@@ -4,3 +4,6 @@
 build/*
 build
 debug
+config.**
+Downloads/**
+Downloads/
