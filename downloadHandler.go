@@ -65,10 +65,11 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 		for {
 			select {
 			case <-t.C:
-				fmt.Printf("  transferred %v / %v bytes (%.2f%%)\n",
+				fmt.Printf("  transferred %v / %v bytes (%.2f%%) %.2f KiB/s\n",
 					resp.BytesComplete(),
 					resp.Size,
-					100*resp.Progress())
+					100*resp.Progress(),
+					resp.BytesPerSecond()/1024)
 
 			case <-resp.Done:
 				// download is complete

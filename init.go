@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -13,6 +15,7 @@ func init() {
 	pflag.Parse()
 	viper.BindPFlags(pflag.CommandLine)
 	viper.SetDefault("Port", ":8080")
+	viper.SetDefault("DownloadFolder", filepath.FromSlash("downloads/"))
 	viper.RegisterAlias("RestoreAssets", "Unpack")
 	viper.SetConfigName("config")        // name of config file (without extension)
 	viper.AddConfigPath("/etc/godown/")  // path to look for the config file in
@@ -20,6 +23,7 @@ func init() {
 	viper.AddConfigPath(".")             // optionally look for config in the working directory
 	err := viper.ReadInConfig()          // Find and read the config file
 	if err != nil {                      // Handle errors reading the config file
-		panic(fmt.Errorf("fatal error config file: %s", err))
+		fmt.Errorf("fatal error config file: %s", err)
 	}
+	os.Mkdir(viper.GetString("DownloadFolder"), 0777)
 }
