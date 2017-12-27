@@ -1,15 +1,15 @@
-rm bindata_assetfs.go
+start=`date +%s`
 
-cd Angular/GoDown/
+cd gui
 
 ng build --prod
 
+cd ..
 
-go-bindata-assetfs dist/...
+go-bindata-assetfs static/...
 
-mv bindata_assetfs.go ../..
 
-cd ../..
+
 
 env GOOS=android   GOARCH=arm      go build -o build/GoDown-android-arm     -v github.com/Pwed/GoDown
 env GOOS=darwin    GOARCH=386      go build -o build/GoDown-darwin-386      -v github.com/Pwed/GoDown
@@ -41,3 +41,9 @@ env GOOS=plan9     GOARCH=amd64    go build -o build/GoDown-plan9-amd64     -v g
 env GOOS=solaris   GOARCH=amd64    go build -o build/GoDown-solaris-amd64   -v github.com/Pwed/GoDown
 env GOOS=windows   GOARCH=386      go build -o build/GoDown-windows-386     -v github.com/Pwed/GoDown
 env GOOS=windows   GOARCH=amd64    go build -o build/GoDown-windows-amd64   -v github.com/Pwed/GoDown
+
+
+end=`date +%s`
+
+runtime=$((end-start))
+echo "Build finished after $runtime seconds."

@@ -1,6 +1,5 @@
 
 
 - Update README.md
-- Add hash support
 - connect to BBolt DB
 - finish the TODO list

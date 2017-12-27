@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os/exec"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/gorilla/mux"
@@ -23,6 +24,14 @@ func main() {
 		})
 	}
 
+	if viper.GetBool("Dev") {
+		ng := exec.Command("ng", "build", "--watch")
+		ng.Dir = "gui"
+		ng.Start()
+		viper.Set("LocalStaticFiles", true)
+		fmt.Println("Server is running in Development mode and will serve static files locally and rebuild them when changes are detected. \nFirst build may take a few seconds, please be patient on slow systems")
+	}
+
 	fmt.Println("Starting Server")
 
 	m := mux.NewRouter()
@@ -30,7 +39,7 @@ func main() {
 	m.HandleFunc("/api/startDownload", downloadHandler)
 
 	if viper.GetBool("LocalStaticFiles") {
-		m.PathPrefix("/").Handler(http.FileServer(http.Dir("Angular/GoDown/dist")))
+		m.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 	} else {
 		m.PathPrefix("/").Handler(http.FileServer(assetFS()))
 	}

@@ -1,15 +1,18 @@
-rm bindata_assetfs.go
+start=`date +%s`
 
-cd Angular/GoDown/
+
+cd gui
 
 ng build --prod
 
+cd ..
 
-go-bindata-assetfs dist/...
-
-mv bindata_assetfs.go ../..
-
-cd ../..
+go-bindata-assetfs static/...
 
 
 go build -o build/Current-GoDown
+
+
+end=`date +%s`
+runtime=$((end-start))
+echo "Build finished after $runtime seconds."
