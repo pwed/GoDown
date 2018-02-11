@@ -14,16 +14,32 @@ func setChecksum(request *grab.Request, hash []byte, deleteOnCheckFail bool, has
 	case "none":
 		break
 	case "md5":
-		request.SetChecksum(md5.New(), hash, deleteOnCheckFail)
+		request.SetChecksum(
+			md5.New(),
+			hash,
+			deleteOnCheckFail,
+		)
 		break
 	case "sha1":
-		request.SetChecksum(sha1.New(), hash, deleteOnCheckFail)
+		request.SetChecksum(
+			sha1.New(),
+			hash,
+			deleteOnCheckFail,
+		)
 		break
 	case "sha256":
-		request.SetChecksum(sha256.New(), hash, deleteOnCheckFail)
+		request.SetChecksum(
+			sha256.New(),
+			hash,
+			deleteOnCheckFail,
+		)
 		break
 	case "sha512":
-		request.SetChecksum(sha512.New(), hash, deleteOnCheckFail)
+		request.SetChecksum(
+			sha512.New(),
+			hash,
+			deleteOnCheckFail,
+		)
 		break
 	}
 }
